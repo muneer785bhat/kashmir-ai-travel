@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ destination["name"] }} | Kashmir AI
+    </title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="destination-detail-page">
+
+
+<!-- NAVBAR -->
+
+<header class="destination-navbar">
+
+    <a href="/" class="logo destination-logo">
+
+        <span class="logo-icon">🏔️</span>
+
+        <span>
+            Kashmir<span class="logo-ai">AI</span>
+        </span>
+
+    </a>
+
+
+    <nav class="nav-links destination-nav">
+
+        <a href="/">Home</a>
+
+        <a href="/explore">Explore</a>
+
+        <a href="/destinations">
+            Destinations
+        </a>
+
+        <a href="/stays">
+            Stays
+        </a>
+
+        <a href="/planner">
+            Trip Planner
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- HERO -->
+
+<section
+    class="detail-hero"
+    style="background-image:
+        url('{{ url_for(
+            'static',
+            filename='images/' + destination['image']
+        ) }}');">
+
+
+    <div class="detail-overlay">
+
+        <a href="/destinations"
+           class="back-link">
+
+            ← All destinations
+
+        </a>
+
+
+        <div class="section-label">
+            {{ destination["location"] }}
+        </div>
+
+
+        <h1>
+            {{ destination["name"] }}
+        </h1>
+
+
+        <p>
+            {{ destination["description"] }}
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- DESTINATION INFO -->
+
+<section class="detail-section">
+
+
+    <div class="detail-intro">
+
+        <div>
+
+            <div class="section-label">
+                DISCOVER
+            </div>
+
+            <h2>
+                Experience
+                <span>{{ destination["name"] }}</span>
+            </h2>
+
+        </div>
+
+
+        <div class="best-time">
+
+            <small>
+                BEST TIME TO VISIT
+            </small>
+
+            <strong>
+                {{ destination["best_time"] }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ACTIVITIES -->
+
+    <div class="activities-heading">
+
+        <div class="section-label">
+            THINGS TO DO
+        </div>
+
+        <h2>
+            Experiences worth
+            <span>remembering.</span>
+        </h2>
+
+    </div>
+
+
+    <div class="activity-grid">
+
+        {% for activity in activities %}
+
+        <article class="activity-card">
+
+            <div class="activity-number">
+
+                {{ "%02d" | format(loop.index) }}
+
+            </div>
+
+
+            <div class="activity-icon">
+
+                {% if activity["category"] == "adventure" %}
+                    🏔️
+                {% elif activity["category"] == "culture" %}
+                    🏛️
+                {% else %}
+                    🌲
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <div class="activity-category">
+
+                    {{ activity["category"] | upper }}
+
+                </div>
+
+
+                <h3>
+                    {{ activity["name"] }}
+                </h3>
+
+
+                <p>
+                    {{ activity["description"] }}
+                </p>
+
+
+                <span class="activity-season">
+
+                    🗓️ {{ activity["season"] }}
+
+                </span>
+
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="no-activities">
+
+            <h3>
+                Activities coming soon
+            </h3>
+
+            <p>
+                We're adding more experiences
+                for this destination.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- CTA -->
+
+    <div class="detail-cta">
+
+        <div>
+
+            <div class="section-label">
+                READY TO EXPLORE?
+            </div>
+
+            <h2>
+                Plan your
+                <span>{{ destination["name"] }}</span>
+                trip.
+            </h2>
+
+        </div>
+
+
+        <div class="detail-buttons">
+
+            <a href="/planner"
+               class="primary-btn">
+
+                ✦ Build My Itinerary →
+
+            </a>
+
+
+            <a href="/weather"
+               class="secondary-detail-btn">
+
+                🌦️ Check Weather
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<footer>
+
+    <div class="footer-logo">
+        🏔️ Kashmir<span>AI</span>
+    </div>
+
+    <p>
+        Discover Paradise. Your way.
+    </p>
+
+    <div class="copyright">
+        © 2026 Kashmir AI Travel
+    </div>
+
+</footer>
+
+
+</body>
+</html>

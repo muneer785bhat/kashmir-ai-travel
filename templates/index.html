@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kashmir AI Travel | Discover Paradise</title>
+
+    <meta name="description"
+          content="AI-powered travel companion for exploring Kashmir.">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a href="/" class="logo">
+        <span class="logo-icon">🏔️</span>
+        <span>Kashmir<span class="logo-ai">AI</span></span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/explore">Explore</a>
+        <a href="/destinations">Destinations</a>
+        <a href="/stays">Stays</a>
+        <a href="/planner">Trip Planner</a>
+    </nav>
+
+    <a href="/assistant" class="nav-ai-btn">
+        <span>✦</span> AI Assistant
+    </a>
+
+    <button class="menu-btn" id="menuBtn">
+        ☰
+    </button>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            <span class="pulse"></span>
+            AI-Powered Kashmir Travel
+        </div>
+
+        <h1>
+            Discover
+            <span>Kashmir</span>
+            <br>
+            Your Way.
+        </h1>
+
+        <p class="hero-description">
+            Plan unforgettable journeys through the valleys,
+            mountains and lakes of Kashmir with your personal
+            AI travel companion.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/planner" class="primary-btn">
+                ✦ Plan My Trip
+                <span>→</span>
+            </a>
+
+            <a href="/explore" class="secondary-btn">
+                Explore Kashmir
+            </a>
+
+        </div>
+
+        <div class="hero-stats">
+
+            <div class="stat">
+                <strong>50+</strong>
+                <span>Places</span>
+            </div>
+
+            <div class="stat">
+                <strong>100+</strong>
+                <span>Experiences</span>
+            </div>
+
+            <div class="stat">
+                <strong>AI</strong>
+                <span>Trip Planning</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Floating destination card -->
+
+    <div class="floating-card destination-card">
+
+        <div class="mini-image gulmarg"></div>
+
+        <div>
+            <small>Featured Destination</small>
+            <h3>Gulmarg</h3>
+
+            <div class="rating">
+                ★ 4.9
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Scroll indicator -->
+
+    <div class="scroll-indicator">
+
+        <span>Scroll to explore</span>
+
+        <div class="scroll-line"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="intro-section">
+
+    <div class="section-label">
+        WHY KASHMIR AI?
+    </div>
+
+    <h2>
+        Your journey.
+        <span>Reimagined.</span>
+    </h2>
+
+    <p>
+        From discovering hidden valleys to planning the perfect
+        itinerary, Kashmir AI brings everything you need into
+        one beautiful travel experience.
+    </p>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <div class="feature-card">
+
+        <div class="feature-icon">🤖</div>
+
+        <h3>AI Trip Planner</h3>
+
+        <p>
+            Tell us your budget, duration and interests.
+            Our AI creates a personalized Kashmir itinerary.
+        </p>
+
+        <a href="/planner">Plan your journey →</a>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">🗺️</div>
+
+        <h3>Explore Kashmir</h3>
+
+        <p>
+            Discover beautiful destinations, attractions,
+            activities and hidden gems across Kashmir.
+        </p>
+
+        <a href="/explore">Explore destinations →</a>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">🏨</div>
+
+        <h3>Find Your Stay</h3>
+
+        <p>
+            Discover hotels, houseboats, homestays and
+            accommodation options for every budget.
+        </p>
+
+        <a href="/stays">Find accommodation →</a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DESTINATIONS ================= -->
+
+<section class="destinations-section">
+
+    <div class="section-heading">
+
+        <div>
+            <div class="section-label">
+                PLACES TO EXPLORE
+            </div>
+
+            <h2>
+                Kashmir's
+                <span>Beautiful Corners</span>
+            </h2>
+        </div>
+
+        <a href="/destinations" class="view-all">
+            View all destinations →
+        </a>
+
+    </div>
+
+
+    <div class="destination-grid">
+
+        <article class="destination gulmarg-card">
+
+            <div class="destination-content">
+
+                <span>01</span>
+
+                <h3>Gulmarg</h3>
+
+                <p>
+                    Meadows • Snow • Adventure
+                </p>
+
+                <a href="/destinations">
+                    Discover →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <article class="destination pahalgam-card">
+
+            <div class="destination-content">
+
+                <span>02</span>
+
+                <h3>Pahalgam</h3>
+
+                <p>
+                    Valleys • Rivers • Nature
+                </p>
+
+                <a href="/destinations">
+                    Discover →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <article class="destination dal-card">
+
+            <div class="destination-content">
+
+                <span>03</span>
+
+                <h3>Dal Lake</h3>
+
+                <p>
+                    Shikaras • Houseboats • Srinagar
+                </p>
+
+                <a href="/destinations">
+                    Discover →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <article class="destination sonamarg-card">
+
+            <div class="destination-content">
+
+                <span>04</span>
+
+                <h3>Sonamarg</h3>
+
+                <p>
+                    Glaciers • Mountains • Adventure
+                </p>
+
+                <a href="/destinations">
+                    Discover →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ================= AI CTA ================= -->
+
+<section class="ai-section">
+
+    <div class="ai-content">
+
+        <div class="ai-symbol">
+            ✦
+        </div>
+
+        <div>
+
+            <div class="section-label">
+                YOUR PERSONAL TRAVEL COMPANION
+            </div>
+
+            <h2>
+                Not sure where to go?
+            </h2>
+
+            <p>
+                Ask our AI anything about Kashmir and
+                get personalized recommendations instantly.
+            </p>
+
+        </div>
+
+        <a href="/assistant" class="primary-btn">
+            Ask Kashmir AI →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        🏔️ Kashmir<span>AI</span>
+    </div>
+
+    <p>
+        Discover Paradise. Your way.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="/explore">Explore</a>
+        <a href="/planner">Trip Planner</a>
+        <a href="/stays">Stays</a>
+        <a href="/assistant">AI Assistant</a>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 Kashmir AI Travel. Built with ❤️ in Kashmir.
+    </div>
+
+</footer>
+
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

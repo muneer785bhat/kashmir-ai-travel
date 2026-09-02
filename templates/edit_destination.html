@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Destination | Kashmir AI Travel</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .edit-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+        }
+
+        .edit-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .edit-card h1 {
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .current-image {
+            margin-bottom: 15px;
+        }
+
+        .current-image img {
+            width: 220px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .save-button,
+        .cancel-button {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .save-button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .cancel-button {
+            background: #eee;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="edit-container">
+
+    <div class="edit-card">
+
+        <h1>✏️ Edit Destination</h1>
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label>Destination Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ destination['name'] }}"
+                    required
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Location</label>
+
+                <input
+                    type="text"
+                    name="location"
+                    value="{{ destination['location'] }}"
+                    required
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Category</label>
+
+                <input
+                    type="text"
+                    name="category"
+                    value="{{ destination['category'] }}"
+                    required
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Description</label>
+
+                <textarea
+                    name="description"
+                    required
+                >{{ destination['description'] }}</textarea>
+            </div>
+
+
+            <div class="form-group">
+                <label>Best Time to Visit</label>
+
+                <input
+                    type="text"
+                    name="best_time"
+                    value="{{ destination['best_time'] }}"
+                >
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Current Image</label>
+
+                {% if destination['image'] %}
+
+                <div class="current-image">
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/' + destination['image']
+                        ) }}"
+                        alt="{{ destination['name'] }}"
+                    >
+
+                </div>
+
+                {% else %}
+
+                <p>No image uploaded.</p>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Replace Image (Optional)</label>
+
+                <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                >
+
+            </div>
+
+
+            <div class="button-row">
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+                    💾 Save Changes
+                </button>
+
+                <a
+                    href="/admin"
+                    class="cancel-button"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Destinations | Kashmir AI</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="destinations-page">
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="destination-navbar">
+
+    <a href="/" class="logo destination-logo">
+
+        <span class="logo-icon">🏔️</span>
+
+        <span>
+            Kashmir<span class="logo-ai">AI</span>
+        </span>
+
+    </a>
+
+
+    <nav class="nav-links destination-nav">
+
+        <a href="/">Home</a>
+
+        <a href="/explore">Explore</a>
+
+        <a href="/destinations"
+           class="active">
+            Destinations
+        </a>
+
+        <a href="/stays">
+            Stays
+        </a>
+
+        <a href="/planner">
+            Trip Planner
+        </a>
+
+    </nav>
+
+
+    <a href="/assistant"
+       class="nav-ai-btn destination-ai-btn">
+
+        ✦ AI Assistant
+
+    </a>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="destination-hero">
+
+    <div class="destination-hero-content">
+
+        <div class="section-label">
+            PLACES WORTH DISCOVERING
+        </div>
+
+        <h1>
+            Kashmir,
+            <span>one journey.</span>
+            <br>
+            countless memories.
+        </h1>
+
+        <p>
+            Explore iconic landscapes, peaceful valleys,
+            alpine mountains and hidden corners of Kashmir.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= DESTINATIONS ================= -->
+
+<section class="destination-explorer">
+
+    <div class="destination-top">
+
+        <div>
+
+            <div class="section-label">
+                EXPLORE THE VALLEY
+            </div>
+
+            <h2>
+                Where will you
+                <span>go next?</span>
+            </h2>
+
+        </div>
+
+
+        <div class="destination-search">
+
+            <span>⌕</span>
+
+            <input
+                id="destinationFilter"
+                type="text"
+                placeholder="Search places..."
+            >
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FILTERS -->
+
+    <div class="destination-filters">
+
+        <button
+            class="destination-filter active"
+            data-category="all">
+
+            All Places
+
+        </button>
+
+        <button
+            class="destination-filter"
+            data-category="nature">
+
+            🌲 Nature
+
+        </button>
+
+        <button
+            class="destination-filter"
+            data-category="adventure">
+
+            🏔️ Adventure
+
+        </button>
+
+        <button
+            class="destination-filter"
+            data-category="culture">
+
+            🏛️ Culture
+
+        </button>
+
+        <button
+            class="destination-filter"
+            data-category="offbeat">
+
+            ✨ Offbeat
+
+        </button>
+
+    </div>
+
+
+
+    <!-- CARDS -->
+
+    <div class="destination-cards"
+         id="destinationCards">
+
+
+        <!-- SRINAGAR -->
+
+       {% for destination in destinations %}
+
+<article
+    class="large-destination-card"
+    data-category="{{ destination['category'] }}"
+    data-name="{{ destination['name'] | lower }}">
+
+    <div
+        class="destination-photo"
+        style="background-image: url('{{ url_for('static', filename='images/' + destination['image']) }}');">
+
+        <span class="destination-tag">
+            {{ destination['category'].split(',')[0] | upper }}
+        </span>
+
+        <div class="destination-overlay">
+
+            <span>
+                {{ "%02d" | format(loop.index) }}
+            </span>
+
+            <h3>
+                {{ destination['name'] }}
+            </h3>
+
+            <p>
+                {{ destination['category']
+                   | replace(',', ' • ')
+                   | title }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="destination-info">
+
+        <p>
+            {{ destination['description'] }}
+        </p>
+
+
+        <div class="destination-meta">
+
+            <span>
+                📍 {{ destination['location'] }}
+            </span>
+
+            <a href="/destination/{{ destination['name'] }}">
+        Explore →
+    </a>
+
+
+        </div>
+
+    </div>
+
+</article>
+
+{% endfor %}
+
+
+
+        <!-- GULMARG -->
+
+        
+
+        <!-- PAHALGAM -->
+
+
+
+
+        <!-- SONAMARG -->
+
+        
+        <!-- DOODHPATHRI -->
+
+       
+
+
+       
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div id="noDestinations"
+         class="no-destinations">
+
+        <div>🏔️</div>
+
+        <h3>
+            No destination found
+        </h3>
+
+        <p>
+            Try another search or category.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= AI CTA ================= -->
+
+<section class="destination-ai-cta">
+
+    <div>
+
+        <div class="section-label">
+            CAN'T DECIDE?
+        </div>
+
+        <h2>
+            Tell AI what kind of
+            <span>experience you want.</span>
+        </h2>
+
+        <p>
+            We'll recommend destinations that match
+            your interests, budget and travel style.
+        </p>
+
+    </div>
+<a href="/planner">
+    Plan visit →
+</a>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        🏔️ Kashmir<span>AI</span>
+    </div>
+
+    <p>
+        Discover Paradise. Your way.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="/">Home</a>
+
+        <a href="/explore">Explore</a>
+
+        <a href="/planner">Trip Planner</a>
+
+        <a href="/assistant">AI Assistant</a>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 Kashmir AI Travel
+    </div>
+
+</footer>
+
+
+
+<script>
+
+const search =
+    document.getElementById(
+        "destinationFilter"
+    );
+
+const cards =
+    document.querySelectorAll(
+        ".large-destination-card"
+    );
+
+const filters =
+    document.querySelectorAll(
+        ".destination-filter"
+    );
+
+const empty =
+    document.getElementById(
+        "noDestinations"
+    );
+
+
+let selectedCategory = "all";
+
+
+function filterDestinations() {
+
+    const query =
+        search.value
+        .toLowerCase()
+        .trim();
+
+    let visible = 0;
+
+
+    cards.forEach(card => {
+
+        const name =
+            card.dataset.name
+            .toLowerCase();
+
+        const categories =
+            card.dataset.category;
+
+
+        const matchesSearch =
+            name.includes(query);
+
+        const matchesCategory =
+            selectedCategory === "all" ||
+            categories.includes(
+                selectedCategory
+            );
+
+
+        if (
+            matchesSearch &&
+            matchesCategory
+        ) {
+
+            card.style.display =
+                "block";
+
+            visible++;
+
+        } else {
+
+            card.style.display =
+                "none";
+
+        }
+
+    });
+
+
+    empty.style.display =
+        visible === 0
+        ? "block"
+        : "none";
+
+}
+
+
+search.addEventListener(
+    "input",
+    filterDestinations
+);
+
+
+filters.forEach(filter => {
+
+    filter.addEventListener(
+        "click",
+        () => {
+
+            filters.forEach(item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            filter.classList.add(
+                "active"
+            );
+
+
+            selectedCategory =
+                filter.dataset.category;
+
+
+            filterDestinations();
+
+        }
+    );
+
+});
+
+</script>
+
+
+</body>
+</html>

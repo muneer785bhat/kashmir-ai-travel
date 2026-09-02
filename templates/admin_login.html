@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Admin Login | Kashmir AI
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f3f7f4;
+            font-family: Arial, sans-serif;
+            color: #20352a;
+        }
+
+        .login-card {
+            width: min(420px, 90%);
+            padding: 45px;
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #dce6df;
+            box-shadow: 0 20px 60px rgba(30, 60, 45, .08);
+        }
+
+        .login-logo {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .login-logo span {
+            color: #4c8064;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #78857e;
+            font-size: 13px;
+            margin: 10px 0 35px;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .login-form input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #d9e3dc;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .login-form input:focus {
+            border-color: #4c8064;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            background: #214d38;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .login-button:hover {
+            opacity: .9;
+        }
+
+        .login-error {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background: #fff0f0;
+            color: #a33a3a;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .back-home {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            color: #617169;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="login-card">
+
+    <div class="login-logo">
+        🏔️ Kashmir<span>AI</span>
+    </div>
+
+    <div class="login-subtitle">
+        Administrator Login
+    </div>
+
+
+    {% if error %}
+
+    <div class="login-error">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <form
+        class="login-form"
+        method="POST">
+
+
+        <label for="username">
+            Username
+        </label>
+
+        <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Enter username"
+            required>
+
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter password"
+            required>
+
+
+        <button
+            type="submit"
+            class="login-button">
+
+            Sign In
+
+        </button>
+
+    </form>
+
+
+    <a href="/"
+       class="back-home">
+
+        ← Back to website
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Where to Stay | Kashmir AI Travel</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8f5;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #14532d;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+            font-size: 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .stays-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .stay-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .stay-header {
+            background: #dcfce7;
+            padding: 25px;
+        }
+
+        .stay-header h2 {
+            margin: 0 0 10px;
+            color: #14532d;
+        }
+
+        .category {
+            display: inline-block;
+            background: #166534;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .stay-content {
+            padding: 25px;
+        }
+
+        .destination {
+            color: #166534;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .price {
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 17px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .website {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .booking {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .maps {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .no-stays {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>🏨 Where to Stay in Kashmir</h1>
+
+    <p>Hotels, Resorts, Hostels, Houseboats & More</p>
+
+</div>
+
+
+<div class="container">
+
+    {% if stays %}
+
+    <div class="stays-grid">
+
+        {% for stay in stays %}
+
+        <div class="stay-card">
+
+            <div class="stay-header">
+
+                <h2>
+                    🏨 {{ stay['name'] }}
+                </h2>
+
+                {% if stay['category'] %}
+                    <span class="category">
+                        {{ stay['category'] }}
+                    </span>
+                {% endif %}
+
+            </div>
+
+
+            <div class="stay-content">
+
+                <p class="destination">
+                    📍 {{ stay['destination'] }}
+                </p>
+
+
+                {% if stay['description'] %}
+
+                <p class="description">
+                    {{ stay['description'] }}
+                </p>
+
+                {% endif %}
+
+
+                {% if stay['price'] %}
+
+                <div class="price">
+                    💰 {{ stay['price'] }}
+                </div>
+
+                {% endif %}
+
+
+                <div class="buttons">
+
+                    {% if stay['website_url'] %}
+
+                    <a
+                        href="{{ stay['website_url'] }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button website"
+                    >
+                        🌐 Website
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if stay['booking_url'] %}
+
+                    <a
+                        href="{{ stay['booking_url'] }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button booking"
+                    >
+                        📅 Book Now
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if stay['maps_url'] %}
+
+                    <a
+                        href="{{ stay['maps_url'] }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button maps"
+                    >
+                        🗺️ Maps
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="no-stays">
+
+        <h2>🏨 No stays available</h2>
+
+        <p>
+            No accommodation has been added yet.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

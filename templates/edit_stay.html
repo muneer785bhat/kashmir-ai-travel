@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Stay | Kashmir AI Travel</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8f5;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #14532d;
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #166534;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 30px 0 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 20px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22,163,74,0.1);
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 13px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button,
+        .back-button {
+            flex: 1;
+            padding: 13px 20px;
+            border-radius: 10px;
+            border: none;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        button {
+            background: #15803d;
+            color: white;
+        }
+
+        button:hover {
+            background: #166534;
+        }
+
+        .back-button {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 20px auto;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>✏️ Edit Stay</h1>
+
+        <p class="subtitle">
+            Update accommodation information and property links.
+        </p>
+
+
+        {% if error %}
+
+        <div class="error">
+            ⚠️ {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+
+            <div class="section-title">
+                🏨 Basic Information
+            </div>
+
+
+            <label for="destination">
+                Destination
+            </label>
+
+            <select
+                name="destination"
+                id="destination"
+                required
+            >
+
+                {% for destination in destinations %}
+
+                <option
+                    value="{{ destination['name'] }}"
+                    {% if destination['name'] == stay['destination'] %}
+                    selected
+                    {% endif %}
+                >
+                    {{ destination['name'] }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <label for="name">
+                Stay Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="{{ stay['name'] }}"
+                required
+            >
+
+
+            <label for="category">
+                Category
+            </label>
+
+            <select
+                name="category"
+                id="category"
+            >
+
+                <option value="Hotel"
+                    {% if stay['category'] == 'Hotel' %}selected{% endif %}>
+                    🏨 Hotel
+                </option>
+
+                <option value="Resort"
+                    {% if stay['category'] == 'Resort' %}selected{% endif %}>
+                    🌴 Resort
+                </option>
+
+                <option value="Hostel"
+                    {% if stay['category'] == 'Hostel' %}selected{% endif %}>
+                    🛏️ Hostel
+                </option>
+
+                <option value="Guest House"
+                    {% if stay['category'] == 'Guest House' %}selected{% endif %}>
+                    🏠 Guest House
+                </option>
+
+                <option value="Houseboat"
+                    {% if stay['category'] == 'Houseboat' %}selected{% endif %}>
+                    🚤 Houseboat
+                </option>
+
+                <option value="Homestay"
+                    {% if stay['category'] == 'Homestay' %}selected{% endif %}>
+                    🏡 Homestay
+                </option>
+
+                <option value="Camp"
+                    {% if stay['category'] == 'Camp' %}selected{% endif %}>
+                    ⛺ Camp
+                </option>
+
+            </select>
+
+
+            <div class="section-title">
+                📝 Stay Details
+            </div>
+
+
+            <label for="description">
+                Description
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+            >{{ stay['description'] or '' }}</textarea>
+
+
+            <label for="price">
+                💰 Price Per Night
+            </label>
+
+            <input
+                type="text"
+                id="price"
+                name="price"
+                value="{{ stay['price'] or '' }}"
+                placeholder="Example: From ₹22,000/night"
+            >
+
+
+            <div class="section-title">
+                🔗 Property Connections
+            </div>
+
+
+            <label for="website_url">
+                🌐 Official Website
+            </label>
+
+            <input
+                type="url"
+                id="website_url"
+                name="website_url"
+                value="{{ stay['website_url'] or '' }}"
+                placeholder="https://example.com"
+            >
+
+
+            <label for="booking_url">
+                📅 Booking URL
+            </label>
+
+            <input
+                type="url"
+                id="booking_url"
+                name="booking_url"
+                value="{{ stay['booking_url'] or '' }}"
+                placeholder="https://booking.com/..."
+            >
+
+
+            <label for="maps_url">
+                🗺️ Google Maps URL
+            </label>
+
+            <input
+                type="url"
+                id="maps_url"
+                name="maps_url"
+                value="{{ stay['maps_url'] or '' }}"
+                placeholder="https://maps.google.com/..."
+            >
+
+
+            <div class="buttons">
+
+                <button type="submit">
+                    💾 Save Changes
+                </button>
+
+                <a
+                    href="/admin"
+                    class="back-button"
+                >
+                    ← Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

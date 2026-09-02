@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Activity | Kashmir AI Travel</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8f5;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #14532d;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 6px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 13px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .submit-button,
+        .back-button {
+            padding: 13px 22px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .submit-button {
+            background: #15803d;
+            color: white;
+        }
+
+        .submit-button:hover {
+            background: #166534;
+        }
+
+        .back-button {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .back-button:hover {
+            background: #d1d5db;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .submit-button,
+            .back-button {
+                text-align: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>🎯 Add New Activity</h1>
+
+        <p class="subtitle">
+            Add an activity to a Kashmir destination.
+        </p>
+
+        {% if error %}
+        <div class="error">
+            ⚠️ {{ error }}
+        </div>
+        {% endif %}
+
+
+        <form method="POST">
+
+            <!-- Destination -->
+
+            <div class="form-group">
+
+                <label for="destination_id">
+                    📍 Destination
+                </label>
+
+                <select
+                    name="destination_id"
+                    id="destination_id"
+                    required
+                >
+
+                    <option value="">
+                        Select Destination
+                    </option>
+
+                    {% for destination in destinations %}
+
+                    <option value="{{ destination['id'] }}">
+                        {{ destination['name'] }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <span class="help-text">
+                    Select where this activity is available.
+                </span>
+
+            </div>
+
+
+            <!-- Activity Name -->
+
+            <div class="form-group">
+
+                <label for="name">
+                    🎯 Activity Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Example: Skiing"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Category -->
+
+            <div class="form-group">
+
+                <label for="category">
+                    🏷️ Category
+                </label>
+
+                <select
+                    name="category"
+                    id="category"
+                >
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Adventure">
+                        Adventure
+                    </option>
+
+                    <option value="Nature">
+                        Nature
+                    </option>
+
+                    <option value="Sightseeing">
+                        Sightseeing
+                    </option>
+
+                    <option value="Water Activity">
+                        Water Activity
+                    </option>
+
+                    <option value="Winter Activity">
+                        Winter Activity
+                    </option>
+
+                    <option value="Cultural">
+                        Cultural
+                    </option>
+
+                    <option value="Relaxation">
+                        Relaxation
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label for="description">
+                    📝 Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Describe the activity..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- Season -->
+
+            <div class="form-group">
+
+                <label for="season">
+                    🌤️ Best Season
+                </label>
+
+                <input
+                    type="text"
+                    id="season"
+                    name="season"
+                    placeholder="Example: December to March"
+                >
+
+                <span class="help-text">
+                    Mention the best time or season for this activity.
+                </span>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+                    ➕ Add Activity
+                </button>
+
+                <a
+                    href="/admin"
+                    class="back-button"
+                >
+                    ← Back to Admin
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Trip Planner | Kashmir AI</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="planner-page">
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="planner-navbar">
+
+    <a href="/" class="logo planner-logo">
+
+        <span class="logo-icon">🏔️</span>
+
+        <span>
+            Kashmir<span class="logo-ai">AI</span>
+        </span>
+
+    </a>
+
+
+    <nav class="nav-links planner-nav">
+
+        <a href="/">Home</a>
+
+        <a href="/explore">Explore</a>
+
+        <a href="/destinations">Destinations</a>
+
+        <a href="/stays">Stays</a>
+
+        <a href="/planner" class="active">
+            Trip Planner
+        </a>
+
+    </nav>
+
+
+    <a href="/assistant"
+       class="nav-ai-btn planner-ai-btn">
+
+        ✦ AI Assistant
+
+    </a>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="planner-hero">
+
+    <div class="planner-hero-content">
+
+        <div class="section-label">
+            YOUR PERSONAL TRAVEL PLANNER
+        </div>
+
+        <h1>
+            Plan your
+            <span>perfect Kashmir trip.</span>
+        </h1>
+
+        <p>
+            Tell us what kind of journey you want.
+            We'll create a personalized Kashmir itinerary
+            around your time, budget and interests.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= PLANNER ================= -->
+
+<section class="planner-section">
+
+
+    <div class="planner-container">
+
+
+        <!-- LEFT FORM -->
+
+        <div class="planner-form-card">
+
+            <div class="form-heading">
+
+                <div class="form-icon">
+                    ✦
+                </div>
+
+                <div>
+
+                    <h2>
+                        Tell us about your trip
+                    </h2>
+
+                    <p>
+                        We'll take care of the planning.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DAYS -->
+
+            <div class="form-group">
+
+                <label>
+                    How many days?
+                </label>
+
+                <div class="number-control">
+
+                    <button
+                        type="button"
+                        id="minusDays">
+                        −
+                    </button>
+
+                    <span id="daysValue">
+                        5
+                    </span>
+
+                    <button
+                        type="button"
+                        id="plusDays">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BUDGET -->
+
+            <div class="form-group">
+
+                <label>
+                    Approximate budget
+                </label>
+
+                <div class="budget-wrapper">
+
+                    <span>₹</span>
+
+                    <input
+                        type="number"
+                        id="budget"
+                        value="30000"
+                        min="1000"
+                        step="1000">
+
+                </div>
+
+                <small>
+                    Total trip budget for all travelers
+                </small>
+
+            </div>
+
+
+
+            <!-- TRAVELERS -->
+
+            <div class="form-group">
+
+                <label>
+                    Travelers
+                </label>
+
+                <div class="number-control">
+
+                    <button
+                        type="button"
+                        id="minusTravelers">
+                        −
+                    </button>
+
+                    <span id="travelersValue">
+                        2
+                    </span>
+
+                    <button
+                        type="button"
+                        id="plusTravelers">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STARTING POINT -->
+
+            <div class="form-group">
+
+                <label>
+                    Starting point
+                </label>
+
+                <select id="startingPoint">
+
+                    <option value="Srinagar">
+                        Srinagar
+                    </option>
+
+                    <option value="Jammu">
+                        Jammu
+                    </option>
+
+                    <option value="Srinagar Airport">
+                        Srinagar Airport
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- TRAVEL STYLE -->
+
+            <div class="form-group">
+
+                <label>
+                    Travel style
+                </label>
+
+                <div class="style-options">
+
+                    <button
+                        type="button"
+                        class="style-option active"
+                        data-style="Balanced">
+
+                        <span>🌿</span>
+                        <strong>Balanced</strong>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-style="Adventure">
+
+                        <span>🏔️</span>
+                        <strong>Adventure</strong>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-style="Luxury">
+
+                        <span>✨</span>
+                        <strong>Luxury</strong>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="style-option"
+                        data-style="Budget">
+
+                        <span>💰</span>
+                        <strong>Budget</strong>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INTERESTS -->
+
+            <div class="form-group">
+
+                <label>
+                    What are you interested in?
+                </label>
+
+                <div class="interest-options">
+
+                    <label class="interest">
+
+                        <input
+                            type="checkbox"
+                            value="Nature"
+                            checked>
+
+                        <span>🌲 Nature</span>
+
+                    </label>
+
+
+                    <label class="interest">
+
+                        <input
+                            type="checkbox"
+                            value="Adventure"
+                            checked>
+
+                        <span>🎿 Adventure</span>
+
+                    </label>
+
+
+                    <label class="interest">
+
+                        <input
+                            type="checkbox"
+                            value="Photography">
+
+                        <span>📸 Photography</span>
+
+                    </label>
+
+
+                    <label class="interest">
+
+                        <input
+                            type="checkbox"
+                            value="Culture">
+
+                        <span>🏛️ Culture</span>
+
+                    </label>
+
+
+                    <label class="interest">
+
+                        <input
+                            type="checkbox"
+                            value="Food">
+
+                        <span>🍽️ Food</span>
+
+                    </label>
+
+
+                    <label class="interest">
+
+                        <input
+                            type="checkbox"
+                            value="Shopping">
+
+                        <span>🛍️ Shopping</span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- GENERATE -->
+
+            <button
+                class="generate-btn"
+                id="generateBtn">
+
+                <span>✦</span>
+
+                Generate My Itinerary
+
+                <span>→</span>
+
+            </button>
+
+
+            <p class="planner-note">
+
+                ✨ Your itinerary will be personalized
+                according to your preferences.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- RIGHT PREVIEW -->
+
+        <div class="planner-preview">
+
+            <div class="preview-empty"
+                 id="previewEmpty">
+
+                <div class="preview-symbol">
+                    🏔️
+                </div>
+
+                <h2>
+                    Your Kashmir adventure
+                    starts here.
+                </h2>
+
+                <p>
+                    Fill in your preferences and let
+                    Kashmir AI design your journey.
+                </p>
+
+                <div class="preview-features">
+
+                    <span>✓ Personalized</span>
+
+                    <span>✓ Budget-aware</span>
+
+                    <span>✓ Interest-based</span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ITINERARY -->
+
+            <div class="itinerary"
+                 id="itinerary">
+
+                <div class="itinerary-header">
+
+                    <div>
+
+                        <div class="section-label">
+                            YOUR AI ITINERARY
+                        </div>
+
+                        <h2 id="itineraryTitle">
+                            Kashmir Adventure
+                        </h2>
+
+                    </div>
+
+                    <button
+                        class="reset-btn"
+                        id="resetBtn">
+
+                        ↻ Start over
+
+                    </button>
+
+                </div>
+
+
+                <div class="trip-summary"
+                     id="tripSummary">
+                </div>
+
+
+                <div class="day-list"
+                     id="dayList">
+                </div>
+
+
+                <button
+                    class="assistant-link"
+                    onclick="window.location.href='/assistant'">
+
+                    ✦ Want to customize this with AI?
+                    Ask Kashmir AI →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CTA ================= -->
+
+<section class="planner-bottom">
+
+    <div>
+
+        <div class="section-label">
+            STILL NOT SURE?
+        </div>
+
+        <h2>
+            Talk to your
+            <span>AI travel companion.</span>
+        </h2>
+
+    </div>
+
+
+    <a href="/assistant"
+       class="primary-btn">
+
+        ✦ Ask Kashmir AI →
+
+    </a>
+
+</section>
+
+
+
+<footer>
+
+    <div class="footer-logo">
+        🏔️ Kashmir<span>AI</span>
+    </div>
+
+    <p>
+        Discover Paradise. Your way.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="/">Home</a>
+
+        <a href="/explore">Explore</a>
+
+        <a href="/destinations">Destinations</a>
+
+        <a href="/assistant">AI Assistant</a>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 Kashmir AI Travel
+    </div>
+
+</footer>
+
+
+
+<script src="{{ url_for('static', filename='js/planner.js') }}"></script>
+
+</body>
+</html>

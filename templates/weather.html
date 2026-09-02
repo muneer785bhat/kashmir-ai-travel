@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kashmir Weather | Kashmir AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        /* ================================
+           WEATHER PAGE
+        ================================= */
+
+        .weather-page {
+            background: #f5f8f5;
+            color: #193428;
+        }
+
+
+        /* ================================
+           NAVBAR
+        ================================= */
+
+        .weather-navbar {
+            width: 100%;
+            padding: 18px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(255,255,255,.96);
+
+            border-bottom: 1px solid #e1e9e3;
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .weather-logo {
+            color: #183426;
+        }
+
+        .weather-nav {
+            gap: 28px;
+        }
+
+        .weather-nav a {
+            color: #3d5146;
+            font-size: 13px;
+            transition: .25s;
+        }
+
+        .weather-nav a:hover,
+        .weather-nav a.active {
+            color: #397053;
+        }
+
+        .weather-nav a.active {
+            font-weight: 700;
+        }
+
+
+        /* ================================
+           HERO
+        ================================= */
+
+        .weather-hero {
+            min-height: 440px;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            padding: 80px 8%;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5,28,19,.88),
+                    rgba(5,28,19,.45),
+                    rgba(5,28,19,.18)
+                ),
+                url("https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=2200&q=90");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .weather-hero-content {
+            max-width: 720px;
+            position: relative;
+            z-index: 2;
+
+            animation: weatherHeroIn .8s ease forwards;
+        }
+
+        @keyframes weatherHeroIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .weather-hero .section-label {
+            color: #b9e7ce;
+        }
+
+        .weather-hero h1 {
+            margin-top: 15px;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(55px, 7vw, 90px);
+
+            line-height: .96;
+
+            letter-spacing: -3px;
+        }
+
+        .weather-hero h1 span {
+            color: #bce8cf;
+            font-style: italic;
+        }
+
+        .weather-hero p {
+            max-width: 580px;
+
+            margin-top: 25px;
+
+            color: rgba(255,255,255,.78);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        /* ================================
+           MAIN SECTION
+        ================================= */
+
+        .weather-section {
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 95px 25px 110px;
+        }
+
+        .weather-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+
+            margin-bottom: 30px;
+        }
+
+        .weather-heading h2 {
+            margin-top: 8px;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(40px, 5vw, 58px);
+
+            line-height: 1.05;
+        }
+
+        .weather-heading h2 span {
+            color: #4c8064;
+            font-style: italic;
+        }
+
+
+        /* ================================
+           DESTINATION SELECTOR
+        ================================= */
+
+        .weather-destinations {
+            display: grid;
+
+            grid-template-columns: repeat(6, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 35px;
+        }
+
+        .weather-place {
+            min-height: 82px;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            border: 1px solid #dce6df;
+
+            border-radius: 17px;
+
+            background: white;
+
+            color: #50665a;
+
+            font-family: inherit;
+
+            cursor: pointer;
+
+            transition: .3s;
+
+            box-shadow: 0 5px 18px rgba(25,60,40,.03);
+        }
+
+        .weather-place:hover {
+            transform: translateY(-3px);
+
+            border-color: #9db9a7;
+
+            background: #f7fbf8;
+        }
+
+        .weather-place.active {
+            background: #163c2b;
+
+            border-color: #163c2b;
+
+            color: white;
+
+            box-shadow:
+                0 12px 30px rgba(22,60,43,.18);
+        }
+
+        .weather-place strong {
+            font-size: 11px;
+        }
+
+        .weather-place:first-line {
+            font-size: 20px;
+        }
+
+
+        /* ================================
+           LOADING
+        ================================= */
+
+        .weather-loading {
+            min-height: 320px;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-direction: column;
+
+            gap: 15px;
+
+            background: white;
+
+            border: 1px solid #dfe8e2;
+
+            border-radius: 25px;
+        }
+
+        .weather-spinner {
+            width: 42px;
+            height: 42px;
+
+            border: 3px solid #dcebe1;
+
+            border-top-color: #397053;
+
+            border-radius: 50%;
+
+            animation: spinWeather .8s linear infinite;
+        }
+
+        @keyframes spinWeather {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .weather-loading p {
+            color: #718078;
+            font-size: 12px;
+        }
+
+
+        /* ================================
+           ERROR
+        ================================= */
+
+        .weather-error {
+            display: none;
+
+            padding: 18px 20px;
+
+            margin-bottom: 25px;
+
+            border: 1px solid #f1caca;
+
+            border-radius: 15px;
+
+            background: #fff5f5;
+
+            color: #9a4545;
+
+            font-size: 12px;
+        }
+
+
+        /* ================================
+           WEATHER RESULT
+        ================================= */
+
+        .weather-result {
+            display: none;
+        }
+
+
+        /* ================================
+           CURRENT WEATHER CARD
+        ================================= */
+
+        .current-weather {
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 310px;
+
+            padding: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+            border-radius: 28px;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(172,222,191,.25),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #163c2b,
+                    #285b43
+                );
+
+            box-shadow:
+                0 20px 50px rgba(20,60,40,.15);
+        }
+
+        .current-weather::after {
+            content: "☁️";
+
+            position: absolute;
+
+            right: 25px;
+            bottom: -45px;
+
+            font-size: 180px;
+
+            opacity: .05;
+
+            pointer-events: none;
+        }
+
+        .current-weather .section-label {
+            color: #b8dfc7;
+        }
+
+        #weatherCity {
+            margin-top: 12px;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(40px, 5vw, 62px);
+
+            line-height: 1;
+        }
+
+        #weatherDescription {
+            margin-top: 12px;
+
+            color: rgba(255,255,255,.7);
+
+            font-size: 14px;
+
+            text-transform: capitalize;
+        }
+
+
+        /* ================================
+           TEMPERATURE
+        ================================= */
+
+        .temperature {
+            display: flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        #weatherIcon {
+            margin-right: 8px;
+
+            font-size: 58px;
+
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,.15));
+        }
+
+        .temperature strong {
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(65px, 8vw, 95px);
+
+            line-height: 1;
+        }
+
+        .temperature > span:last-child {
+            align-self: flex-start;
+
+            margin-top: 8px;
+
+            font-size: 25px;
+
+            color: rgba(255,255,255,.7);
+        }
+
+
+        /* ================================
+           WEATHER STATS
+        ================================= */
+
+        .weather-stats {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-top: 15px;
+        }
+
+        .weather-stat {
+            padding: 22px;
+
+            display: grid;
+
+            grid-template-columns: auto 1fr;
+
+            column-gap: 12px;
+
+            align-items: center;
+
+            background: white;
+
+            border: 1px solid #dfe8e2;
+
+            border-radius: 17px;
+
+            box-shadow: 0 7px 25px rgba(25,60,40,.04);
+        }
+
+        .weather-stat > span {
+            grid-row: span 2;
+
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 13px;
+
+            background: #edf6f0;
+
+            font-size: 20px;
+        }
+
+        .weather-stat small {
+            color: #87938c;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+        }
+
+        .weather-stat strong {
+            margin-top: 3px;
+
+            color: #294936;
+
+            font-size: 15px;
+        }
+
+
+        /* ================================
+           FORECAST
+        ================================= */
+
+        .forecast-section {
+            margin-top: 65px;
+        }
+
+        .forecast-section .section-label {
+            color: #628170;
+        }
+
+        .forecast-section h3 {
+            margin-top: 7px;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 38px;
+        }
+
+        .forecast-grid {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-top: 25px;
+        }
+
+        .forecast-card {
+            min-height: 190px;
+
+            padding: 22px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            background: white;
+
+            border: 1px solid #dfe8e2;
+
+            border-radius: 18px;
+
+            transition: .3s;
+        }
+
+        .forecast-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 15px 35px rgba(25,60,40,.08);
+        }
+
+        .forecast-card small {
+            color: #718078;
+
+            font-size: 10px;
+        }
+
+        .forecast-card > span {
+            margin: 16px 0 8px;
+
+            font-size: 35px;
+        }
+
+        .forecast-card strong {
+            color: #294936;
+
+            font-size: 20px;
+        }
+
+        .forecast-card p {
+            max-width: 130px;
+
+            margin-top: 6px;
+
+            color: #849088;
+
+            font-size: 9px;
+
+            text-transform: capitalize;
+        }
+
+
+        /* ================================
+           AI CTA
+        ================================= */
+
+        .weather-ai-cta {
+            max-width: 1150px;
+
+            margin: 0 auto 100px;
+
+            padding: 50px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 35px;
+
+            border-radius: 27px;
+
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(169,216,186,.16),
+                    transparent 30%
+                ),
+                #163c2b;
+
+            color: white;
+        }
+
+        .weather-ai-cta .section-label {
+            color: #a9d8ba;
+        }
+
+        .weather-ai-cta h2 {
+            max-width: 650px;
+
+            margin-top: 8px;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(30px, 4vw, 42px);
+
+            line-height: 1.1;
+        }
+
+        .weather-ai-cta h2 span {
+            color: #a9d8ba;
+            font-style: italic;
+        }
+
+        .weather-ai-cta p {
+            max-width: 570px;
+
+            margin-top: 10px;
+
+            color: rgba(255,255,255,.65);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+        .weather-ai-cta .primary-btn {
+            flex-shrink: 0;
+        }
+
+
+        /* ================================
+           FOOTER
+        ================================= */
+
+        .weather-page footer {
+            background: #0d2118;
+        }
+
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 1000px) {
+
+            .weather-destinations {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .forecast-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .current-weather {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .temperature {
+                align-self: flex-start;
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .weather-nav {
+                display: none;
+            }
+
+            .weather-hero {
+                min-height: 430px;
+
+                padding: 65px 7%;
+            }
+
+            .weather-hero h1 {
+                font-size: 55px;
+            }
+
+            .weather-section {
+                padding: 70px 15px 80px;
+            }
+
+            .weather-destinations {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .current-weather {
+                padding: 30px;
+            }
+
+            .weather-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .weather-ai-cta {
+                margin: 0 15px 70px;
+
+                padding: 30px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .weather-destinations {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .weather-place {
+                min-height: 72px;
+            }
+
+            .weather-heading h2 {
+                font-size: 39px;
+            }
+
+            #weatherCity {
+                font-size: 42px;
+            }
+
+            #weatherIcon {
+                font-size: 45px;
+            }
+
+            .temperature strong {
+                font-size: 70px;
+            }
+
+            .forecast-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .forecast-card {
+                min-height: 165px;
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="weather-page">
+
+
+<!-- ================================
+     NAVBAR
+================================= -->
+
+<header class="weather-navbar">
+
+    <a href="/" class="logo weather-logo">
+
+        <span class="logo-icon">🏔️</span>
+
+        <span>
+            Kashmir<span class="logo-ai">AI</span>
+        </span>
+
+    </a>
+
+
+    <nav class="nav-links weather-nav">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/explore">
+            Explore
+        </a>
+
+        <a href="/destinations">
+            Destinations
+        </a>
+
+        <a href="/stays">
+            Stays
+        </a>
+
+        <a href="/planner">
+            Trip Planner
+        </a>
+
+        <a href="/weather" class="active">
+            Weather
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================================
+     HERO
+================================= -->
+
+<section class="weather-hero">
+
+    <div class="weather-hero-content">
+
+        <div class="section-label">
+            LIVE KASHMIR WEATHER
+        </div>
+
+        <h1>
+            Know before
+            <span>you go.</span>
+        </h1>
+
+        <p>
+            Check live weather conditions and upcoming
+            forecasts before exploring the beautiful
+            valleys and mountains of Kashmir.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================================
+     WEATHER SECTION
+================================= -->
+
+<section class="weather-section">
+
+    <div class="weather-heading">
+
+        <div>
+
+            <div class="section-label">
+                SELECT DESTINATION
+            </div>
+
+            <h2>
+                What's the weather
+                <span>like?</span>
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- DESTINATIONS -->
+
+    <div class="weather-destinations">
+
+        <button class="weather-place active"
+                data-city="srinagar">
+
+            🌊
+
+            <strong>
+                Srinagar
+            </strong>
+
+        </button>
+
+
+        <button class="weather-place"
+                data-city="gulmarg">
+
+            🏔️
+
+            <strong>
+                Gulmarg
+            </strong>
+
+        </button>
+
+
+        <button class="weather-place"
+                data-city="pahalgam">
+
+            🌲
+
+            <strong>
+                Pahalgam
+            </strong>
+
+        </button>
+
+
+        <button class="weather-place"
+                data-city="sonamarg">
+
+            ❄️
+
+            <strong>
+                Sonamarg
+            </strong>
+
+        </button>
+
+
+        <button class="weather-place"
+                data-city="doodhpathri">
+
+            🌿
+
+            <strong>
+                Doodhpathri
+            </strong>
+
+        </button>
+
+
+        <button class="weather-place"
+                data-city="gurez">
+
+            🏔️
+
+            <strong>
+                Gurez
+            </strong>
+
+        </button>
+
+    </div>
+
+
+
+    <!-- LOADING -->
+
+    <div id="weatherLoading"
+         class="weather-loading">
+
+        <div class="weather-spinner"></div>
+
+        <p>
+            Getting latest weather...
+        </p>
+
+    </div>
+
+
+
+    <!-- ERROR -->
+
+    <div id="weatherError"
+         class="weather-error">
+    </div>
+
+
+
+    <!-- RESULT -->
+
+    <div id="weatherResult"
+         class="weather-result">
+
+
+        <!-- CURRENT -->
+
+        <div class="current-weather">
+
+            <div>
+
+                <div class="section-label">
+                    CURRENT CONDITIONS
+                </div>
+
+                <h3 id="weatherCity">
+                    Srinagar
+                </h3>
+
+                <p id="weatherDescription">
+                    Loading...
+                </p>
+
+            </div>
+
+
+            <div class="temperature">
+
+                <span id="weatherIcon">
+                    🌤️
+                </span>
+
+                <strong id="temperature">
+                    --
+                </strong>
+
+                <span>
+                    °C
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STATS -->
+
+        <div class="weather-stats">
+
+            <div class="weather-stat">
+
+                <span>
+                    🌡️
+                </span>
+
+                <small>
+                    Feels like
+                </small>
+
+                <strong id="feelsLike">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="weather-stat">
+
+                <span>
+                    💧
+                </span>
+
+                <small>
+                    Humidity
+                </small>
+
+                <strong id="humidity">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="weather-stat">
+
+                <span>
+                    💨
+                </span>
+
+                <small>
+                    Wind
+                </small>
+
+                <strong id="wind">
+                    --
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FORECAST -->
+
+        <div class="forecast-section">
+
+            <div class="section-label">
+                UPCOMING FORECAST
+            </div>
+
+            <h3>
+                Next conditions
+            </h3>
+
+
+            <div id="forecast"
+                 class="forecast-grid">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================================
+     AI CTA
+================================= -->
+
+<section class="weather-ai-cta">
+
+    <div>
+
+        <div class="section-label">
+            WEATHER + AI
+        </div>
+
+        <h2>
+            Let weather shape
+            <span>your itinerary.</span>
+        </h2>
+
+        <p>
+            Ask Kashmir AI to plan activities around
+            expected weather conditions and make your
+            trip more comfortable.
+        </p>
+
+    </div>
+
+
+    <a href="/planner"
+       class="primary-btn">
+
+        ✦ Plan My Trip →
+
+    </a>
+
+</section>
+
+
+
+<!-- ================================
+     FOOTER
+================================= -->
+
+<footer>
+
+    <div class="footer-logo">
+
+        🏔️ Kashmir<span>AI</span>
+
+    </div>
+
+    <p>
+        Discover Paradise. Your way.
+    </p>
+
+    <div class="copyright">
+
+        © 2026 Kashmir AI Travel
+
+    </div>
+
+</footer>
+
+
+
+<!-- ================================
+     JAVASCRIPT
+================================= -->
+
+<script>
+
+const weatherPlaces =
+    document.querySelectorAll(".weather-place");
+
+const loading =
+    document.getElementById("weatherLoading");
+
+const result =
+    document.getElementById("weatherResult");
+
+const errorBox =
+    document.getElementById("weatherError");
+
+
+const weatherIcons = {
+
+    "01d": "☀️",
+    "01n": "🌙",
+
+    "02d": "🌤️",
+    "02n": "☁️",
+
+    "03d": "☁️",
+    "03n": "☁️",
+
+    "04d": "☁️",
+    "04n": "☁️",
+
+    "09d": "🌧️",
+    "09n": "🌧️",
+
+    "10d": "🌦️",
+    "10n": "🌧️",
+
+    "11d": "⛈️",
+    "11n": "⛈️",
+
+    "13d": "❄️",
+    "13n": "❄️",
+
+    "50d": "🌫️",
+    "50n": "🌫️"
+
+};
+
+
+async function loadWeather(city) {
+
+    loading.style.display = "flex";
+
+    result.style.display = "none";
+
+    errorBox.style.display = "none";
+
+
+    try {
+
+        const response =
+            await fetch(`/api/weather/${city}`);
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(data.error);
+
+        }
+
+
+        const weather =
+            data.data;
+
+
+        document.getElementById(
+            "weatherCity"
+        ).textContent =
+            weather.city;
+
+
+        document.getElementById(
+            "weatherDescription"
+        ).textContent =
+            weather.description;
+
+
+        document.getElementById(
+            "temperature"
+        ).textContent =
+            weather.temperature;
+
+
+        document.getElementById(
+            "weatherIcon"
+        ).textContent =
+            weatherIcons[weather.icon] || "🌤️";
+
+
+        document.getElementById(
+            "feelsLike"
+        ).textContent =
+            weather.feels_like + "°C";
+
+
+        document.getElementById(
+            "humidity"
+        ).textContent =
+            weather.humidity + "%";
+
+
+        document.getElementById(
+            "wind"
+        ).textContent =
+            weather.wind_speed + " km/h";
+
+
+        const forecast =
+            document.getElementById("forecast");
+
+
+        forecast.innerHTML = "";
+
+
+        weather.forecast.forEach(item => {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "forecast-card";
+
+
+            const date =
+                new Date(item.date);
+
+
+            card.innerHTML = `
+
+                <small>
+
+                    ${date.toLocaleDateString(
+                        "en-IN",
+                        {
+                            weekday: "short",
+                            day: "numeric",
+                            month: "short"
+                        }
+                    )}
+
+                </small>
+
+
+                <span>
+
+                    ${
+                        weatherIcons[item.icon]
+                        || "🌤️"
+                    }
+
+                </span>
+
+
+                <strong>
+
+                    ${item.temperature}°C
+
+                </strong>
+
+
+                <p>
+
+                    ${item.description}
+
+                </p>
+
+            `;
+
+
+            forecast.appendChild(card);
+
+        });
+
+
+        loading.style.display =
+            "none";
+
+
+        result.style.display =
+            "block";
+
+    }
+
+
+    catch (err) {
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.textContent =
+            "Unable to load weather: " +
+            err.message;
+
+    }
+
+}
+
+
+
+weatherPlaces.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            weatherPlaces.forEach(item => {
+
+                item.classList.remove("active");
+
+            });
+
+
+            button.classList.add("active");
+
+
+            loadWeather(
+                button.dataset.city
+            );
+
+        }
+    );
+
+});
+
+
+
+loadWeather("srinagar");
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Stay | Kashmir AI Travel</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                linear-gradient(rgba(240, 253, 244, 0.92), rgba(240, 253, 244, 0.96)),
+                url("https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=2000&q=80");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+            color: #14532d;
+        }
+
+        .logo span {
+            color: #16a34a;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: #166534;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 9px;
+            transition: 0.2s;
+        }
+
+        .nav-back:hover {
+            background: #dcfce7;
+        }
+
+        /* MAIN */
+
+        .page {
+            min-height: calc(100vh - 70px);
+            padding: 55px 20px;
+        }
+
+        .form-wrapper {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-heading .icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            border-radius: 20px;
+            background: #dcfce7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 8px 25px rgba(22, 101, 52, 0.12);
+        }
+
+        .page-heading h1 {
+            margin: 0;
+            color: #14532d;
+            font-size: 34px;
+        }
+
+        .page-heading p {
+            margin-top: 10px;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* FORM CARD */
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 24px;
+            padding: 38px;
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.12);
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 19px;
+            font-weight: 800;
+            color: #14532d;
+            padding-bottom: 12px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-title span {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #dcfce7;
+            border-radius: 9px;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 11px;
+            padding: 13px 14px;
+            font-size: 15px;
+            font-family: inherit;
+            background: white;
+            color: #1f2937;
+            transition: all 0.2s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.10);
+        }
+
+        textarea {
+            min-height: 125px;
+            resize: vertical;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .help {
+            margin-top: 6px;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /* LINKS */
+
+        .link-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .link-box .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ERROR */
+
+        .error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            padding: 13px 16px;
+            border-radius: 11px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .submit-button,
+        .back-button {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 11px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .submit-button {
+            border: none;
+            background: linear-gradient(135deg, #15803d, #16a34a);
+            color: white;
+            box-shadow: 0 7px 18px rgba(22, 101, 52, 0.20);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 23px rgba(22, 101, 52, 0.25);
+        }
+
+        .back-button {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .back-button:hover {
+            background: #e2e8f0;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .page {
+                padding: 30px 14px;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+                border-radius: 18px;
+            }
+
+            .page-heading h1 {
+                font-size: 28px;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .submit-button,
+            .back-button {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🏔️ Kashmir <span>AI Travel</span>
+    </div>
+
+    <a href="/admin" class="nav-back">
+        ← Admin Dashboard
+    </a>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="page">
+
+    <div class="form-wrapper">
+
+        <!-- HEADING -->
+
+        <div class="page-heading">
+
+            <div class="icon">
+                🏨
+            </div>
+
+            <h1>Add New Stay</h1>
+
+            <p>
+                Add hotels, resorts, hostels and other accommodation
+                for Kashmir travellers.
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="form-card">
+
+            {% if error %}
+
+            <div class="error">
+                ⚠️ {{ error }}
+            </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+
+                <!-- BASIC INFORMATION -->
+
+                <div class="section">
+
+                    <div class="section-title">
+                        <span>🏨</span>
+                        Basic Information
+                    </div>
+
+
+                    <div class="two-columns">
+
+                        <!-- DESTINATION -->
+
+                        <div class="form-group">
+
+                            <label for="destination">
+                                Destination
+                                <span class="required">*</span>
+                            </label>
+
+                            <select
+                                name="destination"
+                                id="destination"
+                                required
+                            >
+
+                                <option value="">
+                                    Select destination
+                                </option>
+
+                                {% for destination in destinations %}
+
+                                <option value="{{ destination['name'] }}">
+                                    {{ destination['name'] }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- STAY NAME -->
+
+                        <div class="form-group">
+
+                            <label for="name">
+                                Stay Name
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="e.g. The Khyber Himalayan Resort"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Accommodation Type
+                        </label>
+
+                        <select
+                            name="category"
+                            id="category"
+                        >
+
+                            <option value="">
+                                Select accommodation type
+                            </option>
+
+                            <option value="Hotel">
+                                🏨 Hotel
+                            </option>
+
+                            <option value="Resort">
+                                🌴 Resort
+                            </option>
+
+                            <option value="Hostel">
+                                🛏️ Hostel
+                            </option>
+
+                            <option value="Guest House">
+                                🏠 Guest House
+                            </option>
+
+                            <option value="Houseboat">
+                                🚤 Houseboat
+                            </option>
+
+                            <option value="Homestay">
+                                🏡 Homestay
+                            </option>
+
+                            <option value="Camp">
+                                ⛺ Camp
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="section">
+
+                    <div class="section-title">
+                        <span>📝</span>
+                        Stay Details
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Describe the hotel, resort or accommodation..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="price">
+                            💰 Price Per Night
+                        </label>
+
+                        <input
+                            type="text"
+                            id="price"
+                            name="price"
+                            placeholder="e.g. From ₹22,000/night"
+                        >
+
+                        <div class="help">
+                            Prices may vary depending on season and room type.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROPERTY LINKS -->
+
+                <div class="section">
+
+                    <div class="section-title">
+                        <span>🔗</span>
+                        Property Connections
+                    </div>
+
+                    <div class="link-box">
+
+
+                        <!-- WEBSITE -->
+
+                        <div class="form-group">
+
+                            <label for="website_url">
+                                🌐 Official Website
+                            </label>
+
+                            <input
+                                type="url"
+                                id="website_url"
+                                name="website_url"
+                                placeholder="https://example.com"
+                            >
+
+                            <div class="help">
+                                Official website of the hotel or resort.
+                            </div>
+
+                        </div>
+
+
+                        <!-- BOOKING -->
+
+                        <div class="form-group">
+
+                            <label for="booking_url">
+                                📅 Booking URL
+                            </label>
+
+                            <input
+                                type="url"
+                                id="booking_url"
+                                name="booking_url"
+                                placeholder="https://booking.com/..."
+                            >
+
+                            <div class="help">
+                                Direct booking page or trusted booking listing.
+                            </div>
+
+                        </div>
+
+
+                        <!-- MAPS -->
+
+                        <div class="form-group">
+
+                            <label for="maps_url">
+                                🗺️ Google Maps URL
+                            </label>
+
+                            <input
+                                type="url"
+                                id="maps_url"
+                                name="maps_url"
+                                placeholder="https://maps.google.com/..."
+                            >
+
+                            <div class="help">
+                                Location of the property on Google Maps.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="submit-button"
+                    >
+                        ➕ Add Stay
+                    </button>
+
+                    <a
+                        href="/admin"
+                        class="back-button"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>
